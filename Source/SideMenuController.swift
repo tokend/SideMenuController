@@ -316,6 +316,9 @@ open class SideMenuController: UIViewController, UIGestureRecognizerDelegate {
         } else {
             setSideShadow(hidden: !display)
         }
+        
+        if display { centerViewController.viewWillDisappear(true) }
+        else { centerViewController.viewDidAppear(true) }
     }
     
     // MARK: - Interaction -
