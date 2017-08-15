@@ -42,8 +42,9 @@ extension SideMenuController {
         let panGesture = UIPanGestureRecognizer(target: self, action: #selector(handleCenterPanelPan))
         panGesture.delegate = self
         
-        centerPanel.addGestureRecognizer(panLeft)
-        centerPanel.addGestureRecognizer(panRight)
+//        centerPanel.addGestureRecognizer(panLeft)
+//        centerPanel.addGestureRecognizer(panRight)
+        centerPanel.addGestureRecognizer(panGesture)
         centerPanel.addGestureRecognizer(tapRecognizer)
     }
     

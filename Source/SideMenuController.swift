@@ -384,6 +384,24 @@ open class SideMenuController: UIViewController, UIGestureRecognizerDelegate {
             } else {
                 return false
             }
+        case is UIPanGestureRecognizer:
+            if _preferences.interaction.panningEnabled {
+                let userFingerSize: CGFloat = 30
+                
+                if _preferences.drawing.sidePanelPosition.isPositionedLeft {
+                    if touch.location(in: centerPanel).x <= userFingerSize {
+                        return true
+                    }
+                    return sidePanelVisible
+                } else {
+                    if touch.location(in: centerPanel).x >= centerPanel.frame.width - userFingerSize {
+                        return true
+                    }
+                    return sidePanelVisible
+                }
+            } else {
+                return false
+            }
         case is UITapGestureRecognizer:
             return sidePanelVisible
         case is UISwipeGestureRecognizer:
