@@ -42,8 +42,9 @@ public extension UINavigationController {
         guard let sideMenuController = self.sideMenuController else {
             return
         }
-        
-        let button = UIButton(frame: CGRect(x: 0, y: 0, width: 22, height: 22))
+
+        let menuButtonSize = SideMenuController.preferences.drawing.menuButtonSize
+        let button = UIButton(frame: CGRect(x: 0, y: 0, width: menuButtonSize, height: menuButtonSize))
         button.accessibilityIdentifier = SideMenuController.preferences.interaction.menuButtonAccessibilityIdentifier
         button.setImage(image, for: .normal)
         button.addTarget(sideMenuController, action: #selector(SideMenuController.toggle), for: UIControlEvents.touchUpInside)

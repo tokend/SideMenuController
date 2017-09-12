@@ -44,6 +44,7 @@ public extension SideMenuController {
     public struct Preferences {
         public struct Drawing {
             public var menuButtonImage: UIImage?
+            public var menuButtonSize: CGFloat = 24
             public var sidePanelPosition = SidePanelPosition.underCenterPanelLeft
             public var sidePanelWidth: CGFloat = 300
             public var centerPanelOverlayColor = UIColor(hue:0.15, saturation:0.21, brightness:0.17, alpha:0.6)
