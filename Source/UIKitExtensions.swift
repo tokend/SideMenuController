@@ -47,6 +47,8 @@ public extension UINavigationController {
         let button = UIButton(frame: CGRect(x: 0, y: 0, width: menuButtonSize, height: menuButtonSize))
         button.accessibilityIdentifier = SideMenuController.preferences.interaction.menuButtonAccessibilityIdentifier
         button.setImage(image, for: .normal)
+        button.tintColor = UINavigationBar.appearance().tintColor
+        button.adjustsImageWhenHighlighted = false
         button.addTarget(sideMenuController, action: #selector(SideMenuController.toggle), for: UIControlEvents.touchUpInside)
         
         if SideMenuController.preferences.drawing.sidePanelPosition.isPositionedLeft {
