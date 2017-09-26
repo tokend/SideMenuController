@@ -34,7 +34,7 @@ extension UIView {
 }
 
 public extension UINavigationController {
-    public func addSideMenuButton(completion: ((UIBarButtonItem) -> ())? = nil) {
+    public func addSideMenuButton(completion: ((UIButton) -> ())? = nil) {
         guard let image = SideMenuController.preferences.drawing.menuButtonImage else {
             return
         }
@@ -43,7 +43,15 @@ public extension UINavigationController {
             return
         }
 
-        let button = UIBarButtonItem(image: image, style: .plain, target: sideMenuController, action: #selector(SideMenuController.toggle))
+        let menuButtonSize = SideMenuController.preferences.drawing.menuButtonSize
+        let button = UIButton(frame: CGRect(x: 0, y: 0, width: menuButtonSize, height: menuButtonSize))
+        button.accessibilityIdentifier = SideMenuController.preferences.interaction.menuButtonAccessibilityIdentifier
+        button.setImage(image, for: .normal)
+        button.tintColor = UINavigationBar.appearance().tintColor
+        button.adjustsImageWhenHighlighted = false
+        button.addTarget(sideMenuController, action: #selector(SideMenuController.toggle), for: UIControlEvents.touchUpInside)
+        button.widthAnchor.constraint(equalToConstant: menuButtonSize).isActive = true
+        button.heightAnchor.constraint(equalToConstant: menuButtonSize).isActive = true
         
         if SideMenuController.preferences.drawing.sidePanelPosition.isPositionedLeft {
             let newItems = computeNewItems(sideMenuController: sideMenuController, button: button, controller: self.topViewController, positionLeft: true)
@@ -56,7 +64,7 @@ public extension UINavigationController {
         completion?(button)
     }
     
-    private func computeNewItems(sideMenuController: SideMenuController, button: UIBarButtonItem, controller: UIViewController?, positionLeft: Bool) -> [UIBarButtonItem] {
+    private func computeNewItems(sideMenuController: SideMenuController, button: UIButton, controller: UIViewController?, positionLeft: Bool) -> [UIBarButtonItem] {
         
         var items: [UIBarButtonItem] = (positionLeft ? self.topViewController?.navigationItem.leftBarButtonItems :
             self.topViewController?.navigationItem.rightBarButtonItems) ?? []
@@ -68,10 +76,13 @@ public extension UINavigationController {
             }
         }
         
+        let item:UIBarButtonItem = UIBarButtonItem()
+        item.customView = button
+        
         let spacer = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.fixedSpace, target: nil, action: nil)
         spacer.width = -10
         
-        items.append(contentsOf: positionLeft ? [spacer, button] : [button, spacer])
+        items.append(contentsOf: positionLeft ? [spacer, item] : [item, spacer])
         return items
     }
 }
