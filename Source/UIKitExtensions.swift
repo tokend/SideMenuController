@@ -50,8 +50,12 @@ public extension UINavigationController {
         button.tintColor = UINavigationBar.appearance().tintColor
         button.adjustsImageWhenHighlighted = false
         button.addTarget(sideMenuController, action: #selector(SideMenuController.toggle), for: UIControlEvents.touchUpInside)
-        button.widthAnchor.constraint(equalToConstant: menuButtonSize).isActive = true
-        button.heightAnchor.constraint(equalToConstant: menuButtonSize).isActive = true
+
+        let width = NSLayoutConstraint(item: button, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: menuButtonSize)
+        let height = NSLayoutConstraint(item: button, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: menuButtonSize)
+        let constraints = [width, height]
+        button.addConstraints(constraints)
+        NSLayoutConstraint.activate(constraints)
         
         if SideMenuController.preferences.drawing.sidePanelPosition.isPositionedLeft {
             let newItems = computeNewItems(sideMenuController: sideMenuController, button: button, controller: self.topViewController, positionLeft: true)
