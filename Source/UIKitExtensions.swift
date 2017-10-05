@@ -42,6 +42,8 @@ public extension UINavigationController {
         guard let sideMenuController = self.sideMenuController else {
             return
         }
+        
+        let inset: CGFloat = 10
 
         let menuButtonSize = SideMenuController.preferences.drawing.menuButtonSize
         let button = UIButton(frame: CGRect(x: 0, y: 0, width: menuButtonSize, height: menuButtonSize))
@@ -51,8 +53,8 @@ public extension UINavigationController {
         button.adjustsImageWhenHighlighted = false
         button.addTarget(sideMenuController, action: #selector(SideMenuController.toggle), for: UIControlEvents.touchUpInside)
 
-        let width = NSLayoutConstraint(item: button, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: menuButtonSize)
-        let height = NSLayoutConstraint(item: button, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: menuButtonSize)
+        let width = NSLayoutConstraint(item: button, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: menuButtonSize + 2 * inset)
+        let height = NSLayoutConstraint(item: button, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: menuButtonSize + 2 * inset)
         let constraints = [width, height]
         button.addConstraints(constraints)
         NSLayoutConstraint.activate(constraints)
