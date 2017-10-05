@@ -58,11 +58,11 @@ public extension UINavigationController {
         NSLayoutConstraint.activate(constraints)
         
         if SideMenuController.preferences.drawing.sidePanelPosition.isPositionedLeft {
-            let newItems = computeNewItems(sideMenuController: sideMenuController, button: button, controller: self.topViewController, positionLeft: true)
-            self.topViewController?.navigationItem.leftBarButtonItems = newItems
+            let newItems = computeNewItems(sideMenuController: sideMenuController, button: button, controller: viewControllers.first, positionLeft: true)
+            viewControllers.first?.navigationItem.leftBarButtonItems = newItems
         } else {
-            let newItems = computeNewItems(sideMenuController: sideMenuController, button: button, controller: self.topViewController, positionLeft: false)
-            self.topViewController?.navigationItem.rightBarButtonItems = newItems
+            let newItems = computeNewItems(sideMenuController: sideMenuController, button: button, controller: viewControllers.first, positionLeft: false)
+            viewControllers.first?.navigationItem.rightBarButtonItems = newItems
         }
         
         completion?(button)
@@ -70,8 +70,8 @@ public extension UINavigationController {
     
     private func computeNewItems(sideMenuController: SideMenuController, button: UIButton, controller: UIViewController?, positionLeft: Bool) -> [UIBarButtonItem] {
         
-        var items: [UIBarButtonItem] = (positionLeft ? self.topViewController?.navigationItem.leftBarButtonItems :
-            self.topViewController?.navigationItem.rightBarButtonItems) ?? []
+        var items: [UIBarButtonItem] = (positionLeft ? viewControllers.first?.navigationItem.leftBarButtonItems :
+            viewControllers.first?.navigationItem.rightBarButtonItems) ?? []
         
         for item in items {
             if let button = item.customView as? UIButton,
