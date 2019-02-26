@@ -43,27 +43,51 @@ public extension UINavigationController {
             return
         }
         
-        let inset: CGFloat = 10
-
-        let menuButtonSize = SideMenuController.preferences.drawing.menuButtonSize
-        let button = UIButton(frame: CGRect(x: 0, y: 0, width: menuButtonSize, height: menuButtonSize))
+        let menuButtonWidth = SideMenuController.preferences.drawing.menuButtonWidth
+        let menuButtonHeight = self.navigationBar.bounds.height - 2
+        let button = UIButton(frame: CGRect(x: 0, y: 0, width: menuButtonWidth, height: menuButtonHeight))
         button.accessibilityIdentifier = SideMenuController.preferences.interaction.menuButtonAccessibilityIdentifier
         button.setImage(image, for: .normal)
         button.tintColor = UINavigationBar.appearance().tintColor
         button.adjustsImageWhenHighlighted = false
-        button.addTarget(sideMenuController, action: #selector(SideMenuController.toggle), for: UIControlEvents.touchUpInside)
+        button.addTarget(
+            sideMenuController,
+            action: #selector(SideMenuController.toggle),
+            for: UIControlEvents.touchUpInside
+        )
 
-        let width = NSLayoutConstraint(item: button, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: menuButtonSize + 2 * inset)
-        let height = NSLayoutConstraint(item: button, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: menuButtonSize + 2 * inset)
+        let width = NSLayoutConstraint(
+            item: button,
+            attribute: .width,
+            relatedBy: .equal,
+            toItem: nil,
+            attribute: .notAnAttribute,
+            multiplier: 1,
+            constant: menuButtonWidth
+        )
+        let height = NSLayoutConstraint(
+            item: button,
+            attribute: .height,
+            relatedBy: .equal,
+            toItem: nil,
+            attribute: .notAnAttribute,
+            multiplier: 1,
+            constant: menuButtonHeight
+        )
         let constraints = [width, height]
         button.addConstraints(constraints)
         NSLayoutConstraint.activate(constraints)
         
-        if SideMenuController.preferences.drawing.sidePanelPosition.isPositionedLeft {
-            let newItems = computeNewItems(sideMenuController: sideMenuController, button: button, controller: viewControllers.first, positionLeft: true)
+        let isLeft = SideMenuController.preferences.drawing.sidePanelPosition.isPositionedLeft
+        let newItems = computeNewItems(
+            sideMenuController: sideMenuController,
+            button: button,
+            controller: viewControllers.first,
+            positionLeft: isLeft
+        )
+        if isLeft {
             viewControllers.first?.navigationItem.leftBarButtonItems = newItems
         } else {
-            let newItems = computeNewItems(sideMenuController: sideMenuController, button: button, controller: viewControllers.first, positionLeft: false)
             viewControllers.first?.navigationItem.rightBarButtonItems = newItems
         }
         
@@ -82,13 +106,11 @@ public extension UINavigationController {
             }
         }
         
-        let item:UIBarButtonItem = UIBarButtonItem()
+        let item: UIBarButtonItem = UIBarButtonItem()
         item.customView = button
         
-        let spacer = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.fixedSpace, target: nil, action: nil)
-        spacer.width = -10
+        items.append(contentsOf: positionLeft ? [item] : [item])
         
-        items.append(contentsOf: positionLeft ? [spacer, item] : [item, spacer])
         return items
     }
 }
