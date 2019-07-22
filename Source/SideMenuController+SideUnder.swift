@@ -28,11 +28,17 @@ extension SideMenuController {
     
     func configureGestureRecognizersForPositionUnder() {
         
-        let panLeft = UIScreenEdgePanGestureRecognizer(target: self, action: #selector(handleCenterPanelPanLeft))
+        let panLeft = UIScreenEdgePanGestureRecognizer(
+            target: self,
+            action: #selector(handleCenterPanelPanLeft)
+        )
         panLeft.edges = .left
         panLeft.delegate = self
         
-        let panRight = UIScreenEdgePanGestureRecognizer(target: self, action: #selector(handleCenterPanelPanRight))
+        let panRight = UIScreenEdgePanGestureRecognizer(
+            target: self,
+            action: #selector(handleCenterPanelPanRight)
+        )
         panRight.edges = .right
         panRight.delegate = self
         
@@ -64,11 +70,11 @@ extension SideMenuController {
         }
     }
     
-    @inline(__always) func handleCenterPanelPanLeft(_ gesture: UIScreenEdgePanGestureRecognizer) {
+    @objc @inline(__always) func handleCenterPanelPanLeft(_ gesture: UIScreenEdgePanGestureRecognizer) {
         handleCenterPanelPan(gesture)
     }
     
-    @inline(__always) func handleCenterPanelPanRight(_ gesture: UIScreenEdgePanGestureRecognizer) {
+    @objc @inline(__always) func handleCenterPanelPanRight(_ gesture: UIScreenEdgePanGestureRecognizer) {
         handleCenterPanelPan(gesture)
     }
     
@@ -109,10 +115,10 @@ extension SideMenuController {
         
         let updated = centerPanel.frame != centerPanelFrame
         
-        UIView.panelAnimation( duration, animations: { _ in
+        UIView.panelAnimation( duration, animations: {
             self.centerPanel.frame = centerPanelFrame
             self.set(statusUnderlayAlpha: hidden ? 0 : 1)
-        }) { _ in
+        }) {
             if hidden {
                 self.setSideShadow(hidden: hidden)
             }
@@ -120,7 +126,7 @@ extension SideMenuController {
         }
     }
     
-    func handleCenterPanelPan(_ recognizer: UIPanGestureRecognizer){
+    @objc func handleCenterPanelPan(_ recognizer: UIPanGestureRecognizer){
         
         guard canDisplaySideController else {
             return

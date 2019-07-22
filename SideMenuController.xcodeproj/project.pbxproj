@@ -206,10 +206,11 @@
 			};
 			buildConfigurationList = 13A757E01D12A2A0004488DA /* Build configuration list for PBXProject "SideMenuController" */;
 			compatibilityVersion = "Xcode 3.2";
-			developmentRegion = English;
+			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
+				Base,
 			);
 			mainGroup = 13A757DC1D12A2A0004488DA;
 			productRefGroup = 13A757E71D12A2A0004488DA /* Products */;
@@ -387,7 +388,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 3.0;
+				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
 		};
@@ -407,7 +408,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.teodorpatras.SideMenuController;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 3.0;
+				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
 		};
