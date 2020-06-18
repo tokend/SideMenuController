@@ -287,7 +287,13 @@ open class SideMenuController: UIViewController, UIGestureRecognizerDelegate {
             return
         }
         
-        sbw?.set(hidden, withBehaviour: _preferences.animating.statusBarBehaviour)
+         if #available(iOS 13, *) {
+                   //TODO: add code for iOS 13 version
+         }
+         else
+         {
+               sbw?.set(hidden, withBehaviour: _preferences.animating.statusBarBehaviour)
+         }
         
         if _preferences.animating.statusBarBehaviour == StatusBarBehaviour.horizontalPan {
             if !hidden {
@@ -419,6 +425,12 @@ open class SideMenuController: UIViewController, UIGestureRecognizerDelegate {
     // MARK: - Computed variables -
     
     fileprivate var sbw: UIWindow? {
+        
+        // statusBarWindow is not available any more in  iOS 13+
+         
+        if #available(iOS 13, *) {
+             return nil
+         }
         
         let s = "status"
         let b = "Bar"
